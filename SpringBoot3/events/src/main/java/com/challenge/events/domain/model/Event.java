@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Entity
@@ -34,7 +35,7 @@ public class Event {
     @Column(name = "ends_at", nullable = false)
     private LocalDateTime endsAt;
 
-    @OneToMany(mappedBy = "event", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "event", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ParticipantRegistration> registeredParticipants = new ArrayList<>();
 
     public Event(EventDto eventDto) {
@@ -45,8 +46,6 @@ public class Event {
     }
 
     public void addParticipant(Participant participant, RegistrationStatus registrationStatus) {
-        // TODO: Lógica de não existir mais vagas
-
         switch (registrationStatus) {
             case REGISTERED -> {
                 if (this.vacancies > 0) {
@@ -60,9 +59,18 @@ public class Event {
             case RESERVED -> {
                 addParticipantsToList(participant, registrationStatus);
             }
-            case CANCELLED -> {
-                // TODO: canceled case
-            }
+        }
+    }
+
+    public void removeParticipant(Participant participant) {
+        Optional<ParticipantRegistration> participantRegistration = this.registeredParticipants.stream().filter(predicate -> predicate.getParticipant().equals(participant)).findFirst();
+
+        if (participantRegistration.isPresent()) {
+            this.registeredParticipants.remove(participantRegistration.get());
+            this.vacancies += 1;
+        }
+        else  {
+            throw new RuntimeException("Não foi possível desinscrever o participante.");
         }
     }
 

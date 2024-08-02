@@ -45,4 +45,10 @@ public class EventController {
         eventService.registerParticipantToEvent(eventId, participantId, RegistrationStatus.RESERVED);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
+
+    @DeleteMapping("/{eventId}/participants/{participantId}/cancel")
+    public ResponseEntity<?> cancelParticipantRegistrationOnEvent(@PathVariable(value = "eventId") UUID eventId, @PathVariable(value = "participantId") UUID participantId) {
+        eventService.cancelParticipantRegistrationOnEvent(eventId, participantId);
+        return ResponseEntity.ok().build();
+    }
 }
