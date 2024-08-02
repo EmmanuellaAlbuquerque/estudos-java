@@ -2,8 +2,8 @@
 
 - [x] 1 - Cadastro Eventos
 - [x] 2 - Cadastro Participantes
-- [ ] 3 - Inscrição do Participante no Evento
-- [ ] 4 - Realização da Reserva no Evento
+- [x] 3 - Inscrição do Participante no Evento
+- [x] 4 - Realização da Reserva no Evento
 - [ ] 5 - Cancelar Inscrição no Evento
 - [ ] 6 - Listar Inscritos no Evento
 - [ ] 7 - Listar Eventos Inscritos do Participante
