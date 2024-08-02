@@ -2,10 +2,8 @@ package com.challenge.events.controller;
 
 import com.challenge.events.domain.dto.EventDto;
 import com.challenge.events.domain.model.Event;
-import com.challenge.events.domain.repository.EventRepository;
 import com.challenge.events.service.EventService;
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
