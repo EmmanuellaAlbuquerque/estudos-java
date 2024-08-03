@@ -1,6 +1,7 @@
 package com.challenge.events.controller;
 
 import com.challenge.events.domain.dto.EventDto;
+import com.challenge.events.domain.dto.Message;
 import com.challenge.events.domain.model.Event;
 import com.challenge.events.domain.model.ParticipantRegistration;
 import com.challenge.events.enums.RegistrationStatus;
@@ -59,5 +60,10 @@ public class EventController {
         List<ParticipantRegistration> participantRegistrations = eventService.getAllParticipantsByRegistrationStatus(eventId, RegistrationStatus.REGISTERED);
 
         return ResponseEntity.status(HttpStatus.OK).body(participantRegistrations);
+    }
+
+    @GetMapping("/{eventId}/participants/{participantId}/valid")
+    public ResponseEntity<Message> validateParticipantOnAnEvent(@PathVariable(value = "eventId") UUID eventId, @PathVariable(value = "participantId") UUID participantId ) {
+        return ResponseEntity.ok().body(eventService.validateParticipant(eventId, participantId));
     }
 }

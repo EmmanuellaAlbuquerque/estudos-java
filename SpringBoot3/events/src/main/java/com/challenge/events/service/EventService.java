@@ -1,6 +1,7 @@
 package com.challenge.events.service;
 
 import com.challenge.events.domain.dto.EventDto;
+import com.challenge.events.domain.dto.Message;
 import com.challenge.events.domain.model.Event;
 import com.challenge.events.domain.model.Participant;
 import com.challenge.events.domain.model.ParticipantRegistration;
@@ -14,6 +15,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -71,5 +73,15 @@ public class EventService {
 
     public List<ParticipantRegistration> getAllParticipantsByRegistrationStatus(UUID eventId, RegistrationStatus registrationStatus) {
         return participantRegistrationRepository.findAllByEventIdAndRegistrationStatus(eventId, registrationStatus);
+    }
+
+    public Message validateParticipant(UUID eventId, UUID participantId) {
+        Optional<ParticipantRegistration> participantRegistration = participantRegistrationRepository.findByEventIdAndParticipantId(eventId, participantId);
+
+        if (participantRegistration.isPresent()) {
+            return new Message("Participante validado com sucesso!");
+        }
+
+        return new Message("Não foi possível validar o participante no Evento!");
     }
 }
