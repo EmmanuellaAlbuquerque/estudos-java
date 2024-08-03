@@ -6,6 +6,6 @@
 - [x] 4 - Realização da Reserva no Evento
 - [x] 5 - Cancelar Inscrição no Evento
 - [x] 6 - Listar Inscritos no Evento
-- [ ] 7 - Listar Eventos Inscritos do Participante
+- [x] 7 - Listar Eventos Inscritos do Participante
 - [ ] 8 - Validar Entrada do Participante no Evento 
 - [ ] 9 - Conversão de Reservas em Inscrições
