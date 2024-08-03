@@ -1,6 +1,7 @@
 package com.challenge.events.domain.model;
 
 import com.challenge.events.enums.RegistrationStatus;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -27,14 +28,18 @@ public class ParticipantRegistration {
 
     @ManyToOne
     @JoinColumn(name = "event_id")
+    @JsonIgnore
     private Event event;
 
     @ManyToOne
     @JoinColumn(name = "participant_id")
     private Participant participant;
 
+    @Column(name = "registration_date", nullable = false)
     private LocalDateTime registrationDate;
 
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
     private RegistrationStatus registrationStatus;
 
     public ParticipantRegistration(Event event, Participant participant, RegistrationStatus registrationStatus) {

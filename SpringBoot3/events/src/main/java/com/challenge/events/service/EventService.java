@@ -3,6 +3,7 @@ package com.challenge.events.service;
 import com.challenge.events.domain.dto.EventDto;
 import com.challenge.events.domain.model.Event;
 import com.challenge.events.domain.model.Participant;
+import com.challenge.events.domain.model.ParticipantRegistration;
 import com.challenge.events.domain.repository.EventRepository;
 import com.challenge.events.domain.repository.ParticipantRegistrationRepository;
 import com.challenge.events.domain.repository.ParticipantRepository;
@@ -12,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -65,5 +67,9 @@ public class EventService {
         Event event = eventRepository.findById(eventId).orElseThrow(() -> new RuntimeException("Evento não encontrado"));
         event.setVacancies(event.getVacancies() + 1);
         eventRepository.save(event);
+    }
+
+    public List<ParticipantRegistration> getAllParticipantsByRegistrationStatus(UUID eventId, RegistrationStatus registrationStatus) {
+        return participantRegistrationRepository.findAllByEventIdAndRegistrationStatus(eventId, registrationStatus);
     }
 }

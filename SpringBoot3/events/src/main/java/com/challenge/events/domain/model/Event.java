@@ -2,6 +2,7 @@ package com.challenge.events.domain.model;
 
 import com.challenge.events.domain.dto.EventDto;
 import com.challenge.events.enums.RegistrationStatus;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -36,6 +37,7 @@ public class Event {
     private LocalDateTime endsAt;
 
     @OneToMany(mappedBy = "event", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
     private List<ParticipantRegistration> registeredParticipants = new ArrayList<>();
 
     public Event(EventDto eventDto) {

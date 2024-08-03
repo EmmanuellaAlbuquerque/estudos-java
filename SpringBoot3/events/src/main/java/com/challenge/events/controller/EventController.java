@@ -2,6 +2,7 @@ package com.challenge.events.controller;
 
 import com.challenge.events.domain.dto.EventDto;
 import com.challenge.events.domain.model.Event;
+import com.challenge.events.domain.model.ParticipantRegistration;
 import com.challenge.events.enums.RegistrationStatus;
 import com.challenge.events.service.EventService;
 import jakarta.validation.Valid;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -50,5 +52,12 @@ public class EventController {
     public ResponseEntity<?> cancelParticipantRegistrationOnEvent(@PathVariable(value = "eventId") UUID eventId, @PathVariable(value = "participantId") UUID participantId) {
         eventService.cancelParticipantRegistrationOnEvent(eventId, participantId);
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/{eventId}/participants")
+    public ResponseEntity<List<ParticipantRegistration>> obtainAllRegisteredParticipants(@PathVariable(value = "eventId") UUID eventId) {
+        List<ParticipantRegistration> participantRegistrations = eventService.getAllParticipantsByRegistrationStatus(eventId, RegistrationStatus.REGISTERED);
+
+        return ResponseEntity.status(HttpStatus.OK).body(participantRegistrations);
     }
 }
