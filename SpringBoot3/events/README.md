@@ -8,8 +8,10 @@
 - [x] 6 - Listar Inscritos no Evento
 - [x] 7 - Listar Eventos Inscritos do Participante
 - [x] 8 - Validar Entrada do Participante no Evento 
-- [ ] 9 - Conversão de Reservas em Inscrições
+- [x] 9 - Conversão de Reservas em Inscrições
 - [ ] 10 - Pensar na experiência de Uso da API e possíveis melhorias (ex.: cpf, frontend - ciclo de telas)
 - [ ] 11 - Adicionar Swagger
-- [ ] 12 - Adicionar testes
-
+- [ ] 12 - Adicionar Testes
+- [ ] 13 - Capturar as exceptions e personalizar os retornos
+- [ ] 14 - Detalhes de um Evento
+- [ ] 15 - Detalhes de um Participante

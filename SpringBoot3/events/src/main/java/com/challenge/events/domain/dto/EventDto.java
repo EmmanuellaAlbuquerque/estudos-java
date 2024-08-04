@@ -17,11 +17,9 @@ public record EventDto(
         @Positive(message = "O número de vagas do Evento deve ser maior que zero")
         int vacancies,
 
-        @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
         @JsonProperty("starts_at")
         LocalDateTime startsAt,
 
-        @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
         @JsonProperty("ends_at")
         LocalDateTime endsAt
 )
