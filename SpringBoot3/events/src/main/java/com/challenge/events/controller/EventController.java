@@ -63,7 +63,13 @@ public class EventController {
     }
 
     @GetMapping("/{eventId}/participants/{participantId}/valid")
-    public ResponseEntity<Message> validateParticipantOnAnEvent(@PathVariable(value = "eventId") UUID eventId, @PathVariable(value = "participantId") UUID participantId ) {
+    public ResponseEntity<Message> validateParticipantOnAnEvent(@PathVariable(value = "eventId") UUID eventId, @PathVariable(value = "participantId") UUID participantId) {
         return ResponseEntity.ok().body(eventService.validateParticipant(eventId, participantId));
+    }
+
+    @PutMapping("/{eventId}/participants/{participantId}/convert")
+    public ResponseEntity<?> convertReservationIntoRegistration(@PathVariable(value = "eventId") UUID eventId, @PathVariable(value = "participantId") UUID participantId) {
+        eventService.convertReservationIntoRegistration(eventId, participantId);
+        return ResponseEntity.ok().build();
     }
 }

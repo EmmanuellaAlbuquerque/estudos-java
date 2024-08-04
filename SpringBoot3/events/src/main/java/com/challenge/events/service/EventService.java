@@ -84,4 +84,22 @@ public class EventService {
 
         return new Message("Não foi possível validar o participante no Evento!");
     }
+
+    public void convertReservationIntoRegistration(UUID eventId, UUID participantId) {
+        Optional<ParticipantRegistration> participantRegistration = participantRegistrationRepository.findByEventIdAndParticipantId(eventId, participantId);
+
+        if (participantRegistration.isPresent()) {
+            ParticipantRegistration registration = participantRegistration.get();
+            if (registration.getRegistrationStatus() != RegistrationStatus.REGISTERED) {
+                registration.setRegistrationStatus(RegistrationStatus.REGISTERED);
+                participantRegistrationRepository.save(registration);
+            }
+            else {
+                throw new RuntimeException("Participante já está registrado!");
+            }
+        }
+        else {
+            throw new RuntimeException("Reserva não encontrada!");
+        }
+    }
 }
