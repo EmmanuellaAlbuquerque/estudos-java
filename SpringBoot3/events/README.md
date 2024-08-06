@@ -16,6 +16,8 @@
 
 :pushpin: [Requisitos do Desafio](#requisitos-do-desafio)
 
+:pushpin: [Skeleton das pastas do Projeto](#skeleton-das-pastas-do-projeto)
+
 ## Resumo dos Endpoints
 
 | Método | URL | Descrição |
@@ -396,7 +398,7 @@ DELETE /api/v1/events/:event_id/participants/:participant_id/cancel
 - [x] 11 - Conversão de Reservas em Inscrições
 - [x] 12 - Adicionar Swagger
 - [x] 13 - Adicionar Testes
-- [ ] 14 - Capturar as exceptions e personalizar os retornos
+- [x] 14 - Capturar as exceptions e personalizar os retornos
 ```text
 «» lidando com as exceptions
 - Criar exceção personalizada para 404 Event Not Found
@@ -408,4 +410,37 @@ DELETE /api/v1/events/:event_id/participants/:participant_id/cancel
 
 ### Ao rodar o projeto, a Documentação da API se encontra em:
 http://localhost:8080/swagger-ui/index.html#
+
+## Skeleton das pastas do Projeto
+```bash
+├───.idea
+├───.mvn
+│   └───wrapper
+├───src
+│   ├───main
+│   │   ├───java
+│   │   │   └───com
+│   │   │       └───challenge
+│   │   │           └───events
+│   │   │               ├───config
+│   │   │               ├───controller
+│   │   │               ├───domain
+│   │   │               │   ├───dto
+│   │   │               │   ├───model
+│   │   │               │   └───repository
+│   │   │               ├───enums
+│   │   │               ├───exception
+│   │   │               ├───service
+│   │   │               ├───utils
+│   │   │               └───validator
+│   │   └───resources
+│   │       ├───static
+│   │       └───templates
+│   └───test
+│       └───java
+│           └───com
+│               └───challenge
+│                   └───events
+└───target
+```
 
