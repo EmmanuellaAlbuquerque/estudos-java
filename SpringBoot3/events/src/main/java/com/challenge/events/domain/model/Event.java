@@ -3,8 +3,6 @@ package com.challenge.events.domain.model;
 import com.challenge.events.domain.dto.EventDto;
 import com.challenge.events.enums.RegistrationStatus;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.databind.PropertyNamingStrategies;
-import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;

@@ -8,13 +8,72 @@
 
 ## Lista de Conteúdos
 
+:pushpin: [Resumo dos Endpoints](#resumo-dos-endpoints)
+
+:pushpin: [Diagrama de Classes (Domínio da API)](#diagrama-de-classes-domínio-da-api)
+
 :pushpin: [Documentação da API](#api-documentation)
 
 :pushpin: [Requisitos do Desafio](#requisitos-do-desafio)
 
-# Documentação da API
+## Resumo dos Endpoints
 
-## Endpoints
+| Método | URL | Descrição |
+|--------|-----|-----------|
+| POST | `/api/v1/events` | Cria um Evento |
+| POST | `/api/v1/participants` | Cria um Participante |
+| POST | `/api/v1/events/:event_id/participants/:participant_id/register` | Registra um Participante em um Evento |
+| POST | `/api/v1/events/:event_id/participants/:participants_id/reserve` | Reserva um Participante em um Evento |
+| GET | `/api/v1/participants/:participant_id` | Obtém detalhes de um Participante |
+| GET | `/api/v1/events/:event_id` | Obtém detalhes de um Evento |
+| GET | `/api/v1/events/:event_id/participants` | Lista Participantes Registrados no Evento |
+| GET | `/api/v1/participants/:participant_id/events` | Lista Todos os Eventos que o Participante se Inscreveu |
+| GET | `/api/v1/events/:event_id/participants/:participant_id/valid` | Valida a entrada do Participante no evento |
+| PUT | `/api/v1/events/:event_id/participants/:participant_id/convert` | Converte uma Reserva de um Participante em Inscrição |
+| DELETE | `/api/v1/events/:event_id/participants/:participant_id/cancel` | Desinscreve um Participante de um Evento |
+
+
+## Diagrama de Classes (Domínio da API)
+
+```mermaid
+classDiagram
+    class Event {
+        -UUID id
+        -String name
+        -int vacancies
+        -LocalDateTime startsAt
+        -LocalDateTime endsAt
+        -List<ParticipantRegistration> registeredParticipants
+        +addParticipant(Participant, RegistrationStatus)
+        +removeParticipant(Participant)
+        -addParticipantsToList(Participant, RegistrationStatus)
+    }
+
+    class Participant {
+        -UUID id
+        -String name
+        -String surname
+        -String CPF
+    }
+
+    class ParticipantRegistration {
+        -Long id
+        -LocalDateTime registrationDate
+        -RegistrationStatus registrationStatus
+    }
+
+    class RegistrationStatus {
+        <<enumeration>>
+        REGISTERED
+        RESERVED
+    }
+
+    Event "1" *-- "*" ParticipantRegistration
+    Participant "1" *-- "*" ParticipantRegistration
+    ParticipantRegistration --> RegistrationStatus
+```
+
+# Documentação da API
 
 ---
 ### Cria um Evento
