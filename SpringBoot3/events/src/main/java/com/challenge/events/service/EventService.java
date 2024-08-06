@@ -38,6 +38,12 @@ public class EventService {
         return this.eventRepository.save(event);
     }
 
+    public EventDto findEventById(UUID eventId) {
+       Event event =  this.eventRepository.findById(eventId).orElseThrow(() -> new NotFoundException(Map.of("error", "Evento não encontrado!")));
+
+        return new EventDto(event.getName(), event.getVacancies(), event.getStartsAt(), event.getEndsAt());
+    }
+
     public void registerParticipantToEvent(UUID eventId, UUID participantId, RegistrationStatus registrationStatus) {
         Event event = eventRepository.findById(eventId).orElseThrow(() -> new NotFoundException(Map.of("error", "Evento não encontrado!")));
         Participant participant = participantRepository.findById(participantId).orElseThrow(() -> new NotFoundException(Map.of("error", "Participante não encontrado!")));

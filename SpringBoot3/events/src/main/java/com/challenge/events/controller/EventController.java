@@ -39,6 +39,13 @@ public class EventController {
         return ResponseEntity.created(location).build();
     }
 
+    @Operation(summary = "Obtém detalhes de um Evento")
+    @GetMapping("/{eventId}")
+    public ResponseEntity<EventDto> obtainEventDetails(@PathVariable(value = "eventId") UUID eventId) {
+        EventDto eventDto = eventService.findEventById(eventId);
+        return ResponseEntity.ok().body(eventDto);
+    }
+
     @Operation(summary = "Registra um participante no Evento")
     @PostMapping("/{eventId}/participants/{participantId}/register")
     public ResponseEntity<?> registerParticipantToEvent(@PathVariable(value = "eventId") UUID eventId, @PathVariable(value = "participantId") UUID participantId ) {

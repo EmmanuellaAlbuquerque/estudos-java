@@ -31,6 +31,12 @@ public class ParticipantService {
         return this.participantRepository.save(participant);
     }
 
+    public ParticipantDto findParticipantById(UUID participantId) {
+        Participant participant = participantRepository.findById(participantId).orElseThrow(() -> new NotFoundException(Map.of("error", "Participante não encontrado!")));
+
+        return new ParticipantDto(participant.getName(), participant.getSurname(), participant.getCPF());
+    }
+
     public List<Event> findAllRegisteredEventsFromParticipant(UUID participantId) {
         Participant participant = participantRepository.findById(participantId).orElseThrow(() -> new NotFoundException(Map.of("error", "Participante não encontrado!")));
 

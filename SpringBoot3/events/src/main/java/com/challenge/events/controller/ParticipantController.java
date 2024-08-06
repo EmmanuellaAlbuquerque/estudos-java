@@ -3,15 +3,9 @@ package com.challenge.events.controller;
 import com.challenge.events.domain.dto.ParticipantDto;
 import com.challenge.events.domain.model.Event;
 import com.challenge.events.domain.model.Participant;
-import com.challenge.events.domain.model.ParticipantRegistration;
-import com.challenge.events.domain.repository.ParticipantRegistrationRepository;
-import com.challenge.events.domain.repository.ParticipantRepository;
 import com.challenge.events.service.ParticipantService;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.annotation.Order;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -41,6 +35,13 @@ public class ParticipantController {
                 .toUri();
 
         return ResponseEntity.created(location).build();
+    }
+
+    @Operation(summary = "Obtém detalhes de um Participante")
+    @GetMapping("/{participantId}")
+    public ResponseEntity<ParticipantDto> obtainParticipantDetails(@PathVariable(value = "participantId") UUID participantId) {
+        ParticipantDto participantDto = participantService.findParticipantById(participantId);
+        return ResponseEntity.ok().body(participantDto);
     }
 
     @Operation(summary = "Lista os Eventos que o Participante está registrado")

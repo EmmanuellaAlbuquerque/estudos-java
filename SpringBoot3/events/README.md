@@ -38,11 +38,14 @@
 ```
 
 
+- [ ] 14 - Detalhes de um Evento
+- [ ] 15 - Detalhes de um Participante
+
 
 - [x] 3 - Inscrição do Participante no Evento
 ```text
 «» lidando com as exceptions
-- Verificar se o Participante ainda pode se inscrever no evento
+- Verificar se o Participante ainda pode se inscrever no evento ✔
 ```
 
 
@@ -68,9 +71,6 @@
 ```
 
 
-
-- [ ] 14 - Detalhes de um Evento
-- [ ] 15 - Detalhes de um Participante
 
 
 ### Ao rodar o projeto, a Documentação da API se encontra em:
