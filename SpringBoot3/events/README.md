@@ -31,18 +31,21 @@
 ⦿ O CPF deve ser obrigatório
 
 «» regras de negócio e requisitos do sistema
-- O nome deve ter no Máx 50 caracteres
+- O nome deve ter no Máx 50 caracteres ✔
+- O sobrenome deve ter no Máx 50 caracteres ✔
+- O CPF deve estar no formato 123.456.789-09 (14 dígitos) ou 12345678909 (11 dígitos) ✔
+- A API deve retornar o nome completo
 ```
 
 
-<!---
-- O sobrenome deve ter no Máx 50 caracteres
-- A API deve retornar o nome completo
-- O CPF deve estar no formato 123.456.789-09 (14 dígitos) ou 12345678909 (11 dígitos)
--->
-
 
 - [x] 3 - Inscrição do Participante no Evento
+```text
+«» lidando com as exceptions
+- Verificar se o Participante ainda pode se inscrever no evento
+```
+
+
 - [x] 4 - Realização da Reserva no Evento
 - [x] 5 - Cancelar Inscrição no Evento
 - [x] 6 - Listar Inscritos no Evento
@@ -51,11 +54,11 @@
 - [x] 9 - Conversão de Reservas em Inscrições
 - [ ] 10 - Pensar na experiência de Uso da API e possíveis melhorias (ex.: cpf, frontend - ciclo de telas)
 - [x] 11 - Adicionar Swagger
-- [ ] 12 - Adicionar Testes
-- [ ] 13 - Capturar as exceptions e personalizar os retornos
-- [ ] 14 - Detalhes de um Evento
-- [ ] 15 - Detalhes de um Participante
+- [x] 12 - Adicionar Testes
 
+
+
+- [ ] 13 - Capturar as exceptions e personalizar os retornos
 ```text
 «» lidando com as exceptions
 - Criar exceção personalizada para 404 Event Not Found
@@ -63,6 +66,12 @@
 - Retornar erro quando event_id não for definido
 - Retornar erro quando participant_id não for definido
 ```
+
+
+
+- [ ] 14 - Detalhes de um Evento
+- [ ] 15 - Detalhes de um Participante
+
 
 ### Ao rodar o projeto, a Documentação da API se encontra em:
 http://localhost:8080/swagger-ui/index.html#

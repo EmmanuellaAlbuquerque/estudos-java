@@ -9,14 +9,14 @@ import com.challenge.events.domain.repository.EventRepository;
 import com.challenge.events.domain.repository.ParticipantRegistrationRepository;
 import com.challenge.events.domain.repository.ParticipantRepository;
 import com.challenge.events.enums.RegistrationStatus;
-import jakarta.transaction.Transactional;
+import com.challenge.events.exception.BaseFormatException;
+import com.challenge.events.exception.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.time.LocalDateTime;
+import java.util.*;
 
 @Service
 public class EventService {
@@ -38,44 +38,49 @@ public class EventService {
         return this.eventRepository.save(event);
     }
 
-    public void registerParticipantToEvent(UUID event_id, UUID participant_id, RegistrationStatus registrationStatus) {
-        Event event = eventRepository.findById(event_id).orElseThrow(() -> new RuntimeException("Evento não encontrado!"));
+    public void registerParticipantToEvent(UUID eventId, UUID participantId, RegistrationStatus registrationStatus) {
+        Event event = eventRepository.findById(eventId).orElseThrow(() -> new NotFoundException(Map.of("error", "Evento não encontrado!")));
+        Participant participant = participantRepository.findById(participantId).orElseThrow(() -> new NotFoundException(Map.of("error", "Participante não encontrado!")));
 
-        Participant participant = participantRepository.findById(participant_id).orElseThrow(() -> new RuntimeException("Participante não encontrado!"));
+        LocalDateTime today = LocalDateTime.now();
 
-        event.addParticipant(participant, registrationStatus);
+        if (today.isBefore(event.getStartsAt())) {
+            event.addParticipant(participant, registrationStatus);
+        }
+        else {
+            throw new BaseFormatException(Map.of("error", "O período de inscrição já acabou!"));
+        }
 
         try {
             eventRepository.save(event);
         }
         catch (DataIntegrityViolationException exception) {
-            throw new RuntimeException("Participante já foi registrado nesse evento!");
+            throw new BaseFormatException(Map.of("error", "Participante já foi registrado nesse evento!"));
         }
     }
 
-//    @Transactional
     public void cancelParticipantRegistrationOnEvent(UUID eventId, UUID participantId) {
-//        Event event = eventRepository.findById(eventId).orElseThrow(() -> new RuntimeException("Evento não encontrado!"));
-//
-//        Participant participant = participantRepository.findById(participantId).orElseThrow(() -> new RuntimeException("Participante não encontrado!"));
-//
-//        event.removeParticipant(participant);
-//        eventRepository.save(event);
+        Event event = eventRepository.findById(eventId).orElseThrow(() -> new NotFoundException(Map.of("error", "Evento não encontrado!")));
+        Participant participant = participantRepository.findById(participantId).orElseThrow(() -> new NotFoundException(Map.of("error", "Participante não encontrado!")));
 
         if (participantRegistrationRepository.deleteByEventIdAndParticipantId(eventId, participantId) != 1 ) {
-            throw new RuntimeException("Não foi possível desinscrever o participante.");
+            throw new BaseFormatException(Map.of("error", "Não foi possível desinscrever o participante."));
         }
 
-        Event event = eventRepository.findById(eventId).orElseThrow(() -> new RuntimeException("Evento não encontrado"));
         event.setVacancies(event.getVacancies() + 1);
         eventRepository.save(event);
     }
 
     public List<ParticipantRegistration> getAllParticipantsByRegistrationStatus(UUID eventId, RegistrationStatus registrationStatus) {
+        Event event = eventRepository.findById(eventId).orElseThrow(() -> new NotFoundException(Map.of("error", "Evento não encontrado!")));
+
         return participantRegistrationRepository.findAllByEventIdAndRegistrationStatus(eventId, registrationStatus);
     }
 
     public Message validateParticipant(UUID eventId, UUID participantId) {
+        Event event = eventRepository.findById(eventId).orElseThrow(() -> new NotFoundException(Map.of("error", "Evento não encontrado!")));
+        Participant participant = participantRepository.findById(participantId).orElseThrow(() -> new NotFoundException(Map.of("error", "Participante não encontrado!")));
+
         Optional<ParticipantRegistration> participantRegistration = participantRegistrationRepository.findByEventIdAndParticipantId(eventId, participantId);
 
         if (participantRegistration.isPresent()) {
@@ -86,6 +91,9 @@ public class EventService {
     }
 
     public void convertReservationIntoRegistration(UUID eventId, UUID participantId) {
+        Event event = eventRepository.findById(eventId).orElseThrow(() -> new NotFoundException(Map.of("error", "Evento não encontrado!")));
+        Participant participant = participantRepository.findById(participantId).orElseThrow(() -> new NotFoundException(Map.of("error", "Participante não encontrado!")));
+
         Optional<ParticipantRegistration> participantRegistration = participantRegistrationRepository.findByEventIdAndParticipantId(eventId, participantId);
 
         if (participantRegistration.isPresent()) {
@@ -95,11 +103,11 @@ public class EventService {
                 participantRegistrationRepository.save(registration);
             }
             else {
-                throw new RuntimeException("Participante já está registrado!");
+                throw new BaseFormatException(Map.of("error", "Participante já está registrado!"));
             }
         }
         else {
-            throw new RuntimeException("Reserva não encontrada!");
+            throw new BaseFormatException(Map.of("error", "Reserva não encontrada!"));
         }
     }
 }
