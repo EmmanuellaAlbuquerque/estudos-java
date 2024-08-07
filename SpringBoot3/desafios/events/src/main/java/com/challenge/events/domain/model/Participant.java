@@ -1,11 +1,13 @@
 package com.challenge.events.domain.model;
 
 import com.challenge.events.domain.dto.ParticipantDto;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -26,6 +28,10 @@ public class Participant {
 
     @Column(nullable = false)
     private String CPF;
+
+    @OneToMany(mappedBy = "participant")
+    @JsonIgnore
+    private List<ParticipantRegistration> registeredParticipants;
 
     public Participant(ParticipantDto participantDto) {
         this.name = participantDto.name();
