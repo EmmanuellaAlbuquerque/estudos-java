@@ -6,12 +6,14 @@ import com.challenge.events.domain.model.Participant;
 import com.challenge.events.domain.repository.ParticipantRegistrationRepository;
 import com.challenge.events.domain.repository.ParticipantRepository;
 import com.challenge.events.enums.RegistrationStatus;
+import com.challenge.events.exception.BaseFormatException;
 import com.challenge.events.exception.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -27,6 +29,12 @@ public class ParticipantService {
     }
 
     public Participant createParticipant(ParticipantDto participantDto) {
+        Optional<Participant> participantWithSameCPF = participantRepository.findByCPF(participantDto.CPF());
+
+        if (participantWithSameCPF.isPresent()) {
+            throw new BaseFormatException(Map.of("error", "CPF já cadastrado!"));
+        }
+
         Participant participant = new Participant(participantDto);
         return this.participantRepository.save(participant);
     }
