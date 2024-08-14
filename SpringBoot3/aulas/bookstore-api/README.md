@@ -1,6 +1,8 @@
 # BookStore API
 
 ## Tecnologias
+- Spring Web
+- Spring Data JPA
 - PostgreSQL v16.4
 
 ## Ferramentas
@@ -76,5 +78,25 @@ select * from tb_review;
 		"comment": "Reunindo práticas de design e implementação, este livro incorpora vários exemplos baseados em projetos que ilustram a aplicação do design dirigido por domínios no desenvolvimento de softwares na vida real."
 	}
 }
+```
+
+### Skeleton das pastas do Projeto
+```text
+├───src
+│   ├───main
+│   │   ├───java
+│   │   │   └───com
+│   │   │       └───app
+│   │   │           └───bookstore
+│   │   │               ├───controllers
+│   │   │               ├───dtos
+│   │   │               ├───models
+│   │   │               ├───repositories
+│   │   │               └───services
+│   │   └───resources
+│   │       ├───static
+│   │       └───templates
+│   └───test
+└───target
 ```
 
