@@ -6,6 +6,8 @@
   <img src="https://img.shields.io/badge/Apache%20Maven-C71A36?style=for-the-badge&logo=Apache%20Maven&logoColor=white"/>	
 </p>
 
+Esta API permite salvar e gerenciar dados de eventos e seus participantes. Com isso, a API fornece endpoints que permitem: salvar dados de eventos e participantes, registrar e reservar participantes em eventos, obter detalhes de participantes e eventos, listar participantes de um evento específico, listar todos os eventos em que um participante se inscreveu, validar a entrada de um participante em um evento, converter reservas em inscrições e cancelar a inscrição de um participante em um evento.
+
 ## Lista de Conteúdos
 
 :pushpin: [Resumo dos Endpoints](#resumo-dos-endpoints)
