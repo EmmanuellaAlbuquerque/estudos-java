@@ -64,6 +64,8 @@ classDiagram
         -Long id
         -LocalDateTime registrationDate
         -RegistrationStatus registrationStatus
+        -Participant participant
+        -Event event
     }
 
     class RegistrationStatus {
@@ -73,8 +75,8 @@ classDiagram
     }
 
     Event "1" *-- "*" ParticipantRegistration
-    Participant "1" *-- "*" ParticipantRegistration
     ParticipantRegistration --> RegistrationStatus
+    Participant "1" *-- "*" ParticipantRegistration
 ```
 
 # Documentação da API
