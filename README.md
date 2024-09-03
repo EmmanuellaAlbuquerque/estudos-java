@@ -4,7 +4,7 @@
 ├───.idea
 ├───SpringBoot3
 |   ├─── anotacoes
-    |    └───As 4 associações do Spring Data JPA
+|   |    └───As 4 associações do Spring Data JPA
 │   ├───aulas
 │   │   └───shopping-api
 |   |   └───bookstore-api
